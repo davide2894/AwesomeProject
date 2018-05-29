@@ -32,7 +32,7 @@ export default class App extends Component<Props> {
 		
 		this.state = {};
 		this.state.spinValue = new Animated.Value(0);
-		this.state.touched = false;	
+		this.state.touched = true;	
 		// Interpolate beginning and end values		
 		this.state.spin = this.state.spinValue.interpolate({
 			inputRange: [0, 1],
@@ -50,7 +50,7 @@ export default class App extends Component<Props> {
 		Animated.timing(
 			this.state.spinValue,
 			{
-				toValue: this.state.touched? 1 : 0,
+				toValue: this.state.touched && this.state.touched !== undefined ? 1 : 0,
 				duration: 2000,
 				easing: Easing.linear,
 			}
