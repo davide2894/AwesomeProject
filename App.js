@@ -26,15 +26,25 @@ const instructions = Platform.select({
 type Props = {};
 export default class App extends Component<Props> {
 	
-	state = {
-		spinValue: new Animated.Value(0),
-		touched: false,
+	constructor(){
+		
+		super();	
+		
+		this.state = {};
+		this.state.spinValue = new Animated.Value(0);
+		this.state.touched = false;	
+		// Interpolate beginning and end values		
+		this.state.spin = this.state.spinValue.interpolate({
+			inputRange: [0, 1],
+			outputRange: ['0deg', '360deg']})
 	}
 
 	spin () {
+	
 		this.setState((prevState) => ({
 			touched: !prevState.touched
 		}))
+		
 		let spinning = this.state.spinValue.setValue(0);
 		// Setup animation
 		Animated.timing(
@@ -48,14 +58,7 @@ export default class App extends Component<Props> {
 	}
 
 	render() {
-		
-		// Interpolate beginning and end values
-		let spin = this.state.spinValue.interpolate({
-			inputRange: [0, 1],
-			outputRange: ['0deg', '360deg']
-		})
-		console.log(this.state.spinValue);
-		
+				
 		return (
 		  <View style={styles.container}>
 			<TouchableHighlight onPress={() => this.spin()}>				
@@ -65,7 +68,7 @@ export default class App extends Component<Props> {
 						width: 200,
 						height: 200, 
 						borderRadius: 100,
-						transform: [{rotate: spin}] 
+						transform: [{rotate: this.state.spin}] 
 					}}
 				/>
 			</TouchableHighlight>
